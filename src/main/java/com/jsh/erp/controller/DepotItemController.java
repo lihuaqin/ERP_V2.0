@@ -12,6 +12,7 @@ import com.jsh.erp.service.depotItem.DepotItemService;
 import com.jsh.erp.service.material.MaterialService;
 import com.jsh.erp.utils.*;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -339,10 +340,16 @@ public class DepotItemController {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
         Long tenantId = Long.parseLong(request.getSession().getAttribute("tenantId").toString());
+        String searchMaterialName = request.getParameter("searchMaterialName");
+        if(StringUtils.isNotEmpty(searchMaterialName)){
+        	searchMaterialName = "%"+ searchMaterialName +"%";
+        }else {
+        	searchMaterialName = null;
+        }
         try {
-            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(headIds, materialIds, (currentPage-1)*pageSize, pageSize);
+            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(searchMaterialName,headIds, materialIds, (currentPage-1)*pageSize, pageSize);
             String[] mpArr = mpList.split(",");
-            int total = depotItemService.findByAllCount(headIds, materialIds);
+            int total = depotItemService.findByAllCount(searchMaterialName,headIds, materialIds);
             map.put("total", total);
             //存放数据json数组
             JSONArray dataArray = new JSONArray();
@@ -402,8 +409,14 @@ public class DepotItemController {
                             @RequestParam("materialIds") String materialIds,
                             HttpServletRequest request, HttpServletResponse response) {
         Long tenantId = Long.parseLong(request.getSession().getAttribute("tenantId").toString());
+        String searchMaterialName = request.getParameter("searchMaterialName");
+        if(StringUtils.isNotEmpty(searchMaterialName)){
+        	searchMaterialName = "%"+ searchMaterialName +"%";
+        }else {
+        	searchMaterialName = null;
+        }
         try {
-            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(headIds, materialIds, (currentPage-1)*pageSize, pageSize);
+            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(searchMaterialName,headIds, materialIds, (currentPage-1)*pageSize, pageSize);
             //存放数据json数组
             String[] names = {"名称", "型号", "单位", "单价", "上月结存数量", "入库数量", "出库数量", "本月结存数量", "结存金额"};
             String title = "库存报表";
@@ -451,19 +464,25 @@ public class DepotItemController {
                                                         HttpServletRequest request) throws Exception{
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
+        String searchMaterialName = request.getParameter("searchMaterialName");
+        if(StringUtils.isNotEmpty(searchMaterialName)){
+        	searchMaterialName = "%"+ searchMaterialName +"%";
+        }else {
+        	searchMaterialName = null;
+        }
         Long tenantId = Long.parseLong(request.getSession().getAttribute("tenantId").toString());
         try {
-            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(headIds, materialIds, null, null);
-            BigDecimal thisAllPrice = BigDecimal.ZERO;
-            if (null != dataList) {
-                for (DepotItemVo4WithInfoEx diEx : dataList) {
-                    Long mId = diEx.getMId();
-                    BigDecimal thisSum = depotItemService.getStockByParam(depotId,mId,null,null,tenantId);
-                    BigDecimal unitPrice = getUnitPrice(diEx.getPresetPriceOne(), diEx.getPriceStrategy());
-                    thisAllPrice = thisAllPrice.add(thisSum.multiply(unitPrice));
-                }
-            }
-            map.put("totalCount", thisAllPrice);
+//            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(searchMaterialName,headIds, materialIds, null, null);
+//            BigDecimal thisAllPrice = BigDecimal.ZERO;
+//            if (null != dataList) {
+//                for (DepotItemVo4WithInfoEx diEx : dataList) {
+//                    Long mId = diEx.getMId();
+//                    BigDecimal thisSum = depotItemService.getStockByParam(depotId,mId,null,null,tenantId);
+//                    BigDecimal unitPrice = getUnitPrice(diEx.getPresetPriceOne(), diEx.getPriceStrategy());
+//                    thisAllPrice = thisAllPrice.add(thisSum.multiply(unitPrice));
+//                }
+//            }
+            map.put("totalCount", 0);
             res.code = 200;
             res.data = map;
         } catch(Exception e){
@@ -495,10 +514,16 @@ public class DepotItemController {
                                       HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
+        String searchMaterialName = request.getParameter("searchMaterialName");
+        if(StringUtils.isNotEmpty(searchMaterialName)){
+        	searchMaterialName = "%"+ searchMaterialName +"%";
+        }else {
+        	searchMaterialName = null;
+        }
         try {
-            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(headIds, materialIds, (currentPage-1)*pageSize, pageSize);
+            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(searchMaterialName,headIds, materialIds, (currentPage-1)*pageSize, pageSize);
             String[] mpArr = mpList.split(",");
-            int total = depotItemService.findByAllCount(headIds, materialIds);
+            int total = depotItemService.findByAllCount(searchMaterialName,headIds, materialIds);
             map.put("total", total);
             //存放数据json数组
             JSONArray dataArray = new JSONArray();
@@ -556,10 +581,16 @@ public class DepotItemController {
                                   HttpServletRequest request)throws Exception {
         BaseResponseInfo res = new BaseResponseInfo();
         Map<String, Object> map = new HashMap<String, Object>();
+        String searchMaterialName = request.getParameter("searchMaterialName");
+        if(StringUtils.isNotEmpty(searchMaterialName)){
+        	searchMaterialName = "%"+ searchMaterialName +"%";
+        }else {
+        	searchMaterialName = null;
+        }
         try {
-            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(headIds, materialIds, (currentPage-1)*pageSize, pageSize);
+            List<DepotItemVo4WithInfoEx> dataList = depotItemService.findByAll(searchMaterialName,headIds, materialIds, (currentPage-1)*pageSize, pageSize);
             String[] mpArr = mpList.split(",");
-            int total = depotItemService.findByAllCount(headIds, materialIds);
+            int total = depotItemService.findByAllCount(searchMaterialName,headIds, materialIds);
             map.put("total", total);
             //存放数据json数组
             JSONArray dataArray = new JSONArray();

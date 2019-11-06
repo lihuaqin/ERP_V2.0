@@ -271,20 +271,20 @@ public class DepotItemService {
 	}
 	
 
-    public List<DepotItemVo4WithInfoEx> findByAll(String headIds, String materialIds, Integer offset, Integer rows)throws Exception {
+    public List<DepotItemVo4WithInfoEx> findByAll(String searchMaterialName,String headIds, String materialIds, Integer offset, Integer rows)throws Exception {
         List<DepotItemVo4WithInfoEx> list =null;
         try{
-            list = depotItemMapperEx.findByAll(headIds, materialIds, offset, rows);
+            list = depotItemMapperEx.findByAll(searchMaterialName,headIds, materialIds, offset, rows);
         }catch(Exception e){
             JshException.readFail(logger, e);
         }
         return list;
     }
 
-    public int findByAllCount(String headIds, String materialIds)throws Exception {
+    public int findByAllCount(String searchMaterialName,String headIds, String materialIds)throws Exception {
         int result=0;
         try{
-            result = depotItemMapperEx.findByAllCount(headIds, materialIds);
+            result = depotItemMapperEx.findByAllCount(searchMaterialName,headIds, materialIds);
         }catch(Exception e){
             JshException.readFail(logger, e);
         }

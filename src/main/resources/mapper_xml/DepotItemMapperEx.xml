@@ -153,8 +153,14 @@
         inner join jsh_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
         left join jsh_unit u on m.UnitId=u.id and ifnull(u.delete_Flag,'0') !='1'
         where 1=1
+        <if test="searchMaterialName != null" >
+            and m.Name like  '${searchMaterialName}'
+        </if>
         <if test="headIds != null">
             and di.HeaderId in (${headIds})
+        </if>
+        <if test="materialIds != null">
+            and di.MaterialId in (${materialIds})
         </if>
         <if test="materialIds != null">
             and di.MaterialId in (${materialIds})
@@ -171,6 +177,9 @@
         from jsh_depotitem di
         inner join jsh_material m on di.MaterialId=m.id  and ifnull(m.delete_Flag,'0') !='1'
         where 1=1
+        <if test="searchMaterialName != null" >
+            and m.Name like  '${searchMaterialName}'
+        </if>
         <if test="headIds != null">
             and di.HeaderId in (${headIds})
         </if>

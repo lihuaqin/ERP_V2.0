@@ -26,6 +26,11 @@
                 <select name="searchProjectId" id="searchProjectId" style="width:80px;"></select>
             </td>
             <td>&nbsp;</td>
+            <td>商品名称：</td>
+            <td>
+                <input type="text" name="searchMaterialName" id="searchMaterialName" placeholder="商品名称" style="width:100px;">
+            </td>
+            <td>&nbsp;</td>
             <td>月份：</td>
             <td>
                 <input type="text" name="searchMonth" id="searchMonth" onClick="WdatePicker({dateFmt:'yyyy-MM'})"
@@ -321,6 +326,7 @@
                                                     pageSize: pageSize,
                                                     depotId: $.trim($("#searchProjectId").val()),
                                                     monthTime: $("#searchMonth").val(),
+                                                    searchMaterialName: $("#searchMaterialName").val(),
                                                     headIds: HeadIds,
                                                     materialIds: mIds,
                                                     mpList: mPropertyList

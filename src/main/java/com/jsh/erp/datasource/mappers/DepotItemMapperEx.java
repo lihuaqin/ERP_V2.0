@@ -3,6 +3,7 @@ package com.jsh.erp.datasource.mappers;
 import com.jsh.erp.datasource.entities.*;
 import com.jsh.erp.datasource.vo.DepotItemStockWarningCount;
 import com.jsh.erp.datasource.vo.DepotItemVo4Stock;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -40,12 +41,14 @@ public interface DepotItemMapperEx {
             @Param("headerId") Long headerId);
 
     List<DepotItemVo4WithInfoEx> findByAll(
+    		@Param("searchMaterialName") String searchMaterialName,
             @Param("headIds") String headIds,
             @Param("materialIds") String materialIds,
             @Param("offset") Integer offset,
             @Param("rows") Integer rows);
 
     int findByAllCount(
+    		@Param("searchMaterialName") String searchMaterialName,
             @Param("headIds") String headIds,
             @Param("materialIds") String materialIds);
 
