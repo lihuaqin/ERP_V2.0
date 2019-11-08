@@ -137,7 +137,7 @@ if (self.frameElement && self.frameElement.tagName == "IFRAME") {
         tree: ".tree",
         treeview: ".treeview",
         treeviewMenu: ".treeview-menu",
-        open: ".menu-open, .active",
+        open: ".menu-open",
         li: "li",
         data: '[data-widget="tree"]',
         active: ".active"

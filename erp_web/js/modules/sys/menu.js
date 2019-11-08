@@ -80,21 +80,61 @@ $.ajax({
     async: false,
     success: function (res) {
         if (res) {
-            var json = {};
-            json.menu = res;
-            $.ajax({
-                type: "get",
-                url: "../../../pages/template/menu.html?1515",
-                async: false,
-                success: function (tem) {
-                    if (tem) {
-                        var template = Handlebars.compile(tem);
-                        var htmlValue = template(json);
-                        $(".sidebar-menu").html(htmlValue);
-
-                    }
-                }
-            });
+        	var html= '';
+        	for (var i in res) {
+        		html += '<li class="treeview"  id = "'+ res[i].number +'">'+
+	    		'	<a href="javascript:" data-href="blank" class="addTabPage"  onclick = "loadChildren(\''+res[i].number+'\')" title="'+res[i].text+'" data-code="'+res[i].id+'">'+
+	    		'		<i class="fa fa-fw '+res[i].icon+ '"></i>                                                          '+
+	    		'		<span>'+res[i].text+'</span>                                                                      '+
+	    		'		<span class="pull-right-container">                                                        '+
+	    		'			<i class="fa fa-angle-left pull-right"></i>                                            '+
+	    		'		</span>                                                                                    '+
+	    		'	</a>                                                                                           '+
+	    		'</li>';
+        	}
+        	$(".sidebar-menu").html(html);
+         
         }
     }
+
 });
+
+
+function loadChildren(pnumber){
+	console.log(pnumber);
+	var first = $("#" +pnumber ).children()[0];
+	$("#" +pnumber ).html("");
+	$("#" +pnumber ).html($(first));
+	$(".active").attr("class" , "treeview");
+	$.ajax({
+	    type: "post",
+	    url: "/functions/findMenu",
+	    data: ({
+	        pNumber: pnumber,
+	        hasFunctions: ''
+	    }),
+	    dataType: "json",
+	    async: false,
+	    success: function (res) {
+	    	if (res) { 
+		    	var html = '	<ul class="treeview-menu">                                                                     ';
+		    	for (var i in res) {
+		    		html +='		<li class="treeview">                                                                      '+
+				    		'			<a href="javascript:" data-href="'+ res[i].url +'" class="addTabPage" title="'+res[i].text+'" '+
+				    		'			   data-code="'+res[i].id+'">                                                                 '+
+				    		'				<i class="fa fa-fw '+res[i].icon+'"></i>                                                  '+
+				    		'				<span>'+res[i].text+'</span>                                                              '+
+				    		'			</a>                                                                                   '+
+				    		'		</li>                                                                                      ';
+		    		
+		    	}
+
+		    	html +=	'	</ul>                                                                                          ';
+		    	$("#" + pnumber ).append(html);
+		    
+	    	}	    	
+	    	
+	    }
+	});
+	
+}

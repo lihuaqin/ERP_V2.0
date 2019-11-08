@@ -9,6 +9,7 @@
     <id column="Id" jdbcType="BIGINT" property="id" />
     <result column="Number" jdbcType="VARCHAR" property="number" />
     <result column="Name" jdbcType="VARCHAR" property="name" />
+    <result column="Name" jdbcType="VARCHAR" property="text" />
     <result column="PNumber" jdbcType="VARCHAR" property="pnumber" />
     <result column="URL" jdbcType="VARCHAR" property="url" />
     <result column="State" jdbcType="BIT" property="state" />
